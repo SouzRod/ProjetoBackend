@@ -6,6 +6,12 @@ const { secret } = require('../config/auth');
 const { ERROR, GenericError } = require('../config/constants');
 
 const authentication = async (email, password) => {
+
+    if (!email || !password) {
+        const { status, message } = ERROR[2]
+        throw new GenericError(status, message)
+    }
+
     try {
         const user = await User.findOne({ email }).select('+password')
         if (!user) {
@@ -40,7 +46,8 @@ const authentication = async (email, password) => {
                 }
             })
     } catch (error) {
-        console.error(error)
+        const { status, message } = error
+        throw new GenericError(status, message)
     }
 
 }
