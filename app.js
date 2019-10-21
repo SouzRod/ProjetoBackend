@@ -1,5 +1,6 @@
 var app = require('./app/config/server')
 const urls = require('./app/config/url')
+require('dotenv').config()
 require('./app/config/database')
 
 const port = process.env.PORT || 3030
