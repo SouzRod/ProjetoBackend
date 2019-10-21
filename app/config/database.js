@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const uri = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CONECTION}/ProjetoBackend`;
+const uri = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@${process.env.ATLAS_CONNECTION}/ProjetoBackend`;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.set('useCreateIndex', true);
 mongoose.Promise = global.Promise
