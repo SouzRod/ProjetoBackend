@@ -62,14 +62,13 @@ const saveUser = async (obj) => {
 
     return await user.save()
         .then(result => {
-            const user = {
+            return {
                 id: result._id,
-                data_criacao: result.createdAt,
-                data_atualizacao: result.updatedAt,
-                ultimo_login: result.lastLogin,
+                createdAt: result.createdAt,
+                updatedAt: result.updatedAt,
+                lastLogin: result.lastLogin,
                 token: result.token
             }
-            return user
         })
         .catch(error => {
             const { message } = error
@@ -81,14 +80,23 @@ const saveUser = async (obj) => {
 const updateUser = async (id, user, bearerToken) => {
 
     const token = bearerToken.split(' ')[1]
-    const tokenUser = await User.findById(id)
+    const userSelected = await User.findById(id)
         .exec()
         .then(result => {
             if (result) {
-                return result.token
+                return {
+                    name: result.name,
+                    email: result.email,
+                    password: result.password,
+                    phones: result.phones,
+                    createdAt: result.createdAt,
+                    updatedAt: result.updatedAt,
+                    lastLogin: result.lastLogin,
+                    token: result.token
+                }
             }
         })
-
+    const tokenUser = userSelected.token
     if(tokenUser !== token) {
         const { status, message } = ERROR[3]
         if(result.token !== token) throw new GenericError(status, message) 
@@ -96,21 +104,21 @@ const updateUser = async (id, user, bearerToken) => {
     
 
     const userUpdated = {
+        ...userSelected,
         ...user,
-        createdAt: Date.now()
+        updatedAt: new Date()
     }
 
-    return await User.update({ _id: id }, { $set: userUpdated })
+    return await User.findByIdAndUpdate({ _id: id }, { $set: userUpdated })
         .exec()
         .then(result => {
-            const user = {
+            return {
                 id: result._id,
-                data_criacao: result.createdAt,
-                data_atualizacao: result.updatedAt,
-                ultimo_login: result.lastLogin,
+                createdAt: result.createdAt,
+                updatedAt: new Date(),
+                lastLogin: result.lastLogin,
                 token: result.token
             }
-            return user
         })
         .catch(error => {
             const { status, message } = error

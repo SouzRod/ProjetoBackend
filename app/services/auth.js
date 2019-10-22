@@ -39,9 +39,9 @@ const authentication = async (email, password) => {
             .then(result => {
                 return {
                     id: result._id,
-                    data_criacao: result.createdAt,
-                    data_atualizacao: result.updatedAt,
-                    ultimo_login: new Date(),
+                    createdAt: result.createdAt,
+                    updatedAt: result.updatedAt,
+                    lastLogin: new Date(),
                     token
                 }
             })
