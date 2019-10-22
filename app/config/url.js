@@ -3,9 +3,9 @@ const register = require('../routes/register')
 const auth = require('../routes/auth')
 
 const addURLs = (app) => {
-    app.use('/singup', register)
+    app.use('/signup', register)
     app.use('/user', user)
-    app.use('/singin', auth)
+    app.use('/signin', auth)
 }
 
 module.exports = {

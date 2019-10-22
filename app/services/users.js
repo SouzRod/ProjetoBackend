@@ -72,7 +72,8 @@ const saveUser = async (obj) => {
             return user
         })
         .catch(error => {
-            const { status, message } = error
+            const { message } = error
+            const { status } = ERROR[2]
             throw new GenericError(status, message)
         })
 }

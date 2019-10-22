@@ -42,7 +42,7 @@ const authentication = async (email, password) => {
                     data_criacao: result.createdAt,
                     data_atualizacao: result.updatedAt,
                     ultimo_login: new Date(),
-                    token: result.token
+                    token
                 }
             })
     } catch (error) {
